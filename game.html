@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Examination Desk · Bureau of Immutable Affairs</title>
+  <meta name="description" content="A bureaucratic puzzle game in seven days. You are the examiner at Desk 7 of the Permanent Record. Approve what is in good order. Deny the rest. Decide what will always have been true." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='3' y='3' width='18' height='18' fill='none' stroke='%237c1d24' stroke-width='2' rx='2'/%3E%3Cpath d='M7 12l3 3 7-7' fill='none' stroke='%237c1d24' stroke-width='2'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="game.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- CLASSIFICATION BANNER -->
+  <div class="banner">
+    <div class="banner-row">
+      <span>Office of Intake &amp; Refusal · Desk 7</span>
+      <span>Classification: <b>Probationary</b> · Citations Permitted: <b>Four</b></span>
+      <span><a class="banner-link" href="index.html">⟵ The Permanent Record</a></span>
+    </div>
+  </div>
+
+  <div class="wrap g-wrap">
+
+    <!-- ═══════════════ TITLE ═══════════════ -->
+    <section class="screen active" id="scr-title">
+      <div class="title-card sheet">
+        <div class="title-crest" id="title-crest" aria-hidden="true"></div>
+        <p class="eyebrow">Bureau of Immutable Affairs · Office of Intake &amp; Refusal</p>
+        <h1 class="title-h1"><span class="the">The</span>Examination Desk</h1>
+        <p class="motto">Approve what is in good order · Deny the rest · Decide what will always have been true</p>
+
+        <div class="title-letter">
+          <p><b>LETTER OF APPOINTMENT.</b> The Bureau is pleased to inform you that you have
+          been appointed <i>Examiner-Probationary</i> at Desk 7, effective the 2nd of Frugal.
+          The pleasure has been entered into the Record and cannot now be withdrawn, whatever
+          transpires.</p>
+          <p>Your duty is the oldest one: the public will bring you documents, and you will
+          decide which of them become permanent. What you approve enters the Permanent Record,
+          chained to everything before it, and can never be unmade. You are, in the fullest
+          sense of the phrase, a consensus mechanism with a chair.</p>
+          <p>Probation lasts seven days. Regulations will be issued as you are judged able to
+          bear them. The Night Audit reads your desk while you sleep. <b>Five citations
+          concludes the appointment.</b></p>
+        </div>
+
+        <div class="title-actions">
+          <button class="btn btn-primary title-btn" id="btn-new"><span class="stamp-ico">⊛</span> Take Up the Post</button>
+          <button class="btn title-btn" id="btn-continue" style="display:none">⤷ Resume Posting</button>
+        </div>
+        <p class="title-fine">A puzzle in seven days · every seal, case number and citation is genuine · nothing you stamp can be unstamped</p>
+      </div>
+    </section>
+
+    <!-- ═══════════════ MORNING MEMO ═══════════════ -->
+    <section class="screen" id="scr-memo">
+      <div class="memo-sheet sheet">
+        <div class="form-head">
+          <div class="form-no" id="memo-date">DAY 1</div>
+          <div class="form-title">Memorandum to Desk 7</div>
+          <div class="form-sub" id="memo-from">Office of Conformity</div>
+        </div>
+        <div class="memo-subject">RE: <span id="memo-subject"></span></div>
+        <div class="memo-body" id="memo-body"></div>
+        <button class="btn btn-primary" id="memo-go"><span class="stamp-ico">⊛</span> Open the Wicket</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════ THE DESK ═══════════════ -->
+    <section class="screen" id="scr-desk">
+      <div class="hud">
+        <div class="hud-cell"><span class="hud-k" id="hud-day">DAY 1 OF 7</span><span class="hud-v" id="hud-date"></span></div>
+        <div class="hud-cell"><span class="hud-k">Queue</span><span class="hud-v" id="hud-queue"></span></div>
+        <div class="hud-cell"><span class="hud-k">Commendations</span><span class="hud-v" id="hud-comm">0</span></div>
+        <div class="hud-cell"><span class="hud-k">Citations</span><span class="hud-v" id="hud-cite"></span></div>
+      </div>
+
+      <div class="desk">
+        <!-- THE COUNTER: the caller and their papers -->
+        <div class="counter">
+          <div class="caller" id="caller">
+            <div class="caller-crest" id="caller-crest" aria-hidden="true"></div>
+            <div class="caller-id">
+              <div class="caller-name" id="caller-name"></div>
+              <div class="caller-sub" id="caller-sub"></div>
+            </div>
+            <div class="dialogue" id="dialogue"></div>
+          </div>
+          <div id="docwrap"></div>
+          <div class="slip" id="slip"></div>
+        </div>
+
+        <!-- YOUR SIDE OF THE WICKET -->
+        <aside class="tools">
+          <div class="tools-sheet sheet">
+            <div class="tabs" id="tabs"></div>
+            <div class="tabpanel" id="tabpanel"></div>
+          </div>
+          <div class="stampbar" id="stampbar">
+            <button class="btn stamp-btn stamp-approve" id="btn-approve">⊛ APPROVE<small>enter into the Record</small></button>
+            <button class="btn stamp-btn stamp-deny" id="btn-deny">✕ DENY<small>state your grounds</small></button>
+          </div>
+        </aside>
+      </div>
+
+      <!-- GROUNDS OF REFUSAL -->
+      <div class="grounds" id="grounds" role="dialog" aria-label="Grounds of refusal">
+        <div class="grounds-card sheet">
+          <div class="form-head">
+            <div class="form-no">FORM RX-2 · REFUSAL</div>
+            <div class="form-title">State the Grounds</div>
+            <div class="form-sub">A refusal without grounds is merely a mood, and moods are not filed.</div>
+          </div>
+          <div class="grounds-list" id="grounds-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ CLOSE OF BUSINESS ═══════════════ -->
+    <section class="screen" id="scr-summary">
+      <div class="memo-sheet sheet">
+        <div class="form-head">
+          <div class="form-no" id="sum-date"></div>
+          <div class="form-title" id="sum-title">Close of Business</div>
+          <div class="form-sub">The Night Audit will now read your desk. Sleep is permitted but recorded.</div>
+        </div>
+        <div class="process-stats sum-stats" id="sum-stats"></div>
+        <div class="memo-body" id="sum-body"></div>
+        <button class="btn btn-primary" id="sum-next"><span class="stamp-ico">☾</span> Retire for the Night</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════ ENDING ═══════════════ -->
+    <section class="screen" id="scr-ending">
+      <div class="ending-sheet sheet">
+        <div class="ending-head">
+          <div class="form-no" id="end-no">ENDING</div>
+          <h2 class="ending-title" id="end-title"></h2>
+        </div>
+        <div class="ending-body" id="end-body"></div>
+        <div class="ending-epilogue" id="end-epilogue"></div>
+        <div class="title-actions">
+          <button class="btn" id="end-relive">↻ Relive the Final Day</button>
+          <button class="btn btn-danger" id="end-again">⚠ Begin the Probation Again</button>
+        </div>
+        <p class="title-fine">Filed in perpetuity · witnessed by no one · this ending is valid only in the presence of all other endings</p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="src/sha256.js"></script>
+  <script src="src/seal.js"></script>
+  <script src="src/game/story.js"></script>
+  <script src="src/game/engine.js"></script>
+  <script src="src/game/ui.js"></script>
+</body>
+</html>

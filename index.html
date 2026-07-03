@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Permanent Record · Bureau of Immutable Affairs</title>
+  <meta name="description" content="A working toy blockchain in the guise of a government records office — where every primitive is also a bureaucratic joke and an art-world joke. The Aesthetics of Bureaucracy." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='none' stroke='%237c1d24' stroke-width='2'/%3E%3Ccircle cx='12' cy='12' r='4' fill='%237c1d24'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- CLASSIFICATION BANNER -->
+  <div class="banner">
+    <div class="banner-row">
+      <span>Public Record · Open for Inspection</span>
+      <span>Classification: <b>Permanent</b> · Destroy After: <b>Never</b></span>
+      <span id="banner-stamp">Form PR-1 · Rev. ∞</span>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <!-- MASTHEAD -->
+    <header class="masthead">
+      <div class="crest" id="crest" aria-label="Seal of the Bureau"></div>
+      <div class="masthead-mid">
+        <p class="eyebrow">Bureau of Immutable Affairs</p>
+        <h1><span class="the">The</span>Permanent Record</h1>
+        <p class="motto">Nihil sine formulario — nothing without a form</p>
+      </div>
+      <div class="dossier">
+        <div><span class="k">Office</span> · <span class="v">of the Registrar</span></div>
+        <div><span class="k">Ledger</span> · <span class="v" id="d-height">0 forms</span></div>
+        <div><span class="k">Status</span> · <span class="v" id="d-status">In good order</span></div>
+        <div><span class="k">Quorum</span> · <span class="v">Indefinitely pending</span></div>
+      </div>
+    </header>
+
+    <!-- NOW-SERVING TICKER -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track" id="ticker"></div>
+    </div>
+
+    <!-- VACANCY NOTICE -->
+    <a class="vacancy" href="game.html">
+      <span class="vacancy-stamp">VACANCY</span>
+      <span class="vacancy-text"><b>Examiner-Probationary wanted, Desk 7</b> — the Bureau seeks a clerk to decide
+        what enters the Record. Seven days. Two stamps. Five citations concludes the appointment.
+        <i>Apply within ⟶</i></span>
+    </a>
+
+    <div class="cols">
+      <!-- INTAKE -->
+      <section class="intake" aria-label="Submit a form">
+        <div class="sheet">
+          <div class="form-head">
+            <div class="form-no">Form PR-1 · In-Tray</div>
+            <div class="form-title">Application for Entry into the Permanent Record</div>
+            <div class="form-sub">Complete all boxes. Incomplete forms are nonetheless permanent.</div>
+          </div>
+
+          <div class="box">
+            <label for="f-applicant"><span class="box-num">1</span> Applicant / Party of Record</label>
+            <input type="text" id="f-applicant" placeholder="Name, designation, or anonymity" autocomplete="off" />
+          </div>
+
+          <div class="box">
+            <label for="f-dept"><span class="box-num">2</span> Department of Origin</label>
+            <select id="f-dept"></select>
+          </div>
+
+          <div class="box">
+            <label for="f-request"><span class="box-num">3</span> Nature of Request</label>
+            <select id="f-request"></select>
+          </div>
+
+          <div class="box">
+            <label for="f-particulars"><span class="box-num">4</span> Particulars of the Matter</label>
+            <textarea id="f-particulars" rows="3"></textarea>
+          </div>
+
+          <div class="box">
+            <label for="f-clearance"><span class="box-num">5</span> Required Officialness</label>
+            <select id="f-clearance"></select>
+            <div class="clearance-note" id="clearance-note"></div>
+          </div>
+
+          <div class="box">
+            <label class="affirm">
+              <input type="checkbox" id="f-affirm" checked />
+              <span>I affirm that I have read the regulations I have not been given, and accept that this form, once sealed, can never be unmade.</span>
+            </label>
+          </div>
+
+          <button class="btn btn-primary" id="submit-btn">
+            <span class="stamp-ico">⊛</span> Affix Seal &amp; Enter into Record
+          </button>
+          <div class="helper-row">
+            <button class="btn btn-mini btn-ghost" id="random-btn" type="button">⤿ Fabricate a Plausible Matter</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- THE RECORD -->
+      <section class="record" aria-label="The Permanent Record">
+        <div class="record-head">
+          <div>
+            <h2>The Permanent Record</h2>
+            <div class="sub">An immutable ledger of every form ever filed</div>
+          </div>
+          <div class="verdict good" id="verdict">
+            <span class="dot"></span><span id="verdict-text">The Record is in Good Order</span>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <span class="count" id="count">— forms on file</span>
+          <button class="btn btn-mini" id="audit-btn" type="button">⌕ Conduct an Audit</button>
+          <button class="btn btn-mini btn-danger" id="reprocess-btn" type="button" disabled>↻ Re-Process the Record</button>
+          <button class="btn btn-mini btn-danger" id="purge-btn" type="button">⚠ Purge (Forbidden)</button>
+        </div>
+
+        <div class="docs" id="docs"></div>
+      </section>
+    </div>
+
+    <!-- COLOPHON / THE SECRET BLOCKCHAIN EXPLAINER -->
+    <footer class="colophon">
+      <div>
+        <h3>Notice to the Public</h3>
+        <p>This office maintains a <span class="key">blockchain</span>. It has simply
+          declined to use the word, on the grounds that the word is new and the
+          practice is not. A chain of sealed documents, each citing the last so
+          that none may be quietly altered, is the oldest instrument of the
+          State. We have merely automated the clerk.</p>
+        <p>Everything below is real: real SHA-256, real proof-of-work, real
+          tamper-detection. Edit any filed document's <em>Particulars</em> and
+          watch the Record discover the forgery — and itself — at once.</p>
+        <div class="sigblock">Sealed by the Office of the Registrar · Witnessed by no one · Filed in perpetuity</div>
+      </div>
+      <div>
+        <h3>Schedule of Technical Particulars</h3>
+        <div class="glossary">
+          <div><span class="term">Case Reference №</span><span class="gloss">a SHA-256 hash of the form's contents — its fingerprint.</span></div>
+          <div><span class="term">In Reference To</span><span class="gloss">the previous form's hash. This is what chains the Record together.</span></div>
+          <div><span class="term">Required Officialness</span><span class="gloss">proof-of-work difficulty: how many leading zeros the case number must show.</span></div>
+          <div><span class="term">Times Resubmitted</span><span class="gloss">the nonce: how many stamps it took to find a sufficiently official number.</span></div>
+          <div><span class="term">The Audit</span><span class="gloss">chain validation: recompute every number, verify every citation.</span></div>
+          <div><span class="term">Re-Process</span><span class="gloss">re-mining a forged chain to make it pass — slow, costly, and the whole point.</span></div>
+        </div>
+      </div>
+    </footer>
+    <div class="fineprint" id="fineprint"></div>
+  </div>
+
+  <!-- MINING / PROOF-OF-DILIGENCE OVERLAY -->
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Processing form">
+    <div class="process-card" id="process-card">
+      <span class="form-no" id="proc-formno">Form PR-1</span>
+      <div class="stamp-graphic">
+        <span class="ring"></span><span class="ring r2"></span>
+        <span class="mark" id="proc-mark">STAMP</span>
+      </div>
+      <h3 class="process-title" id="proc-title">Applying Proof of Diligence</h3>
+      <p class="process-sub" id="proc-sub">The clerk consults the regulations…</p>
+      <div class="process-stats">
+        <div class="line"><span class="k">Times Resubmitted</span><span class="v num" id="proc-nonce">0</span></div>
+        <div class="line"><span class="k">Required Officialness</span><span class="v" id="proc-target">000…</span></div>
+        <div class="line"><span class="k">Case № so far</span><span class="v hash" id="proc-hash">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="src/sha256.js"></script>
+  <script src="src/seal.js"></script>
+  <script src="src/forms.js"></script>
+  <script src="src/blockchain.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>
