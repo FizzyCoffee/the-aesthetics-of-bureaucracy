@@ -255,7 +255,9 @@
 
   /* ---- Persistence -------------------------------------------------------------*/
   var SAVE_KEY = 'bureau-desk-v1';
+  // Nothing is written to your machine without your consent on Form CK-1.
   Game.save = function (state) {
+    if (Bureau.Retention && !Bureau.Retention.allowed()) return;
     try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {}
   };
   Game.load = function () {

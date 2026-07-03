@@ -82,6 +82,15 @@ The Record persists in your browser's `localStorage`, in keeping with the
 Bureau's policy that nothing is ever forgotten. *Purge (Forbidden)* erases it
 and re-establishes the Founding Instrument.
 
+Persistence is governed by **Form CK-1 · Notice of Retention** — the Bureau's
+cookie system. Nothing is written to your machine until you consent to being
+remembered; refuse, and your files are purged and the Bureau retains a single
+cookie recording only that it is to remember nothing. (A refusal must itself
+be retained, or the Office would be obliged to ask you again upon every visit.
+This is the paradox at the bottom of every consent banner; the Bureau simply
+files it.) Amend your answer at any time via *Cookies: Form CK-1* in the
+classification banner.
+
 ## Deploying it later
 
 Because it is plain static files, deployment is a copy operation:
@@ -104,6 +113,7 @@ src/seal.js       the Office of Seals — generative guilloché art from each ha
 src/forms.js      the Office of Nomenclature & Fine Print (all the copy)
 src/blockchain.js The Permanent Record itself (chain, proof-of-work, the Audit)
 src/app.js        the Front Desk (intake, mining theatre, rendering, tamper/audit)
+src/retention.js  the Office of Retention (Form CK-1 — the cookie system)
 
 game.html         THE EXAMINATION DESK (the game)
 game.css          the wicket, the stamps, the grounds of refusal

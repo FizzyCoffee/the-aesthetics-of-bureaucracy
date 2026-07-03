@@ -414,6 +414,9 @@
       startDay();
     };
 
+    // Consent granted mid-shift: the career on the desk may now be filed.
+    document.addEventListener('bureau:consented', function () { if (state) Game.save(state); });
+
     renderTitle();
   }
 

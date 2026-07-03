@@ -84,7 +84,11 @@
   }
 
   // ---- the ledger -----------------------------------------------------------
-  function save() { try { localStorage.setItem(STORE_KEY, ledger.serialize()); } catch (e) {} }
+  // Nothing is written to your machine without your consent on Form CK-1.
+  function save() {
+    if (Bureau.Retention && !Bureau.Retention.allowed()) return;
+    try { localStorage.setItem(STORE_KEY, ledger.serialize()); } catch (e) {}
+  }
 
   function freshGenesis(done) {
     ledger = new Bureau.Ledger();
@@ -419,5 +423,7 @@
     initChrome();
     initForm();
     loadLedger();
+    // Consent granted mid-visit: file what has so far lived only in memory.
+    document.addEventListener('bureau:consented', function () { if (ledger) save(); });
   });
 })(window.Bureau = window.Bureau || {});
